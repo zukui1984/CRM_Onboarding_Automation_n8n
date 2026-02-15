@@ -1,4 +1,4 @@
-# Energy CRM Onboarding Automation (n8n + Airtable)
+# Energy CRM Onboarding Automation (n8n, Gmail, Airtable)
 
 Automates customer onboarding for an energy CRM: receives customer data via webhook, validates required fields, creates an Airtable customer record when valid, and sends an email notification when invalid.
 
