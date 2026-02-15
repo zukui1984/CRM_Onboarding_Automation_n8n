@@ -4,6 +4,11 @@ Automates customer onboarding for an energy CRM: receives customer data via webh
 
 ---
 
+## Workflow
+
+<img width="1037" height="411" alt="image" src="https://github.com/user-attachments/assets/adcc997e-63f1-4145-8b39-2ff61acae790" />
+
+
 ## Features
 
 - Webhook-based ingestion (JSON via HTTP POST)
