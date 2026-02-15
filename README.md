@@ -34,8 +34,29 @@ Webhook (POST)
 ```
 
 ## Airtable data model
-Base: Energy CRM
-Table: Customers
+- Base: Energy CRM
+- Table: Customers
+- Create data from "Data folder"
+<img width="700" height="500" alt="image" src="https://github.com/user-attachments/assets/65c818e5-c1b3-42a2-a2cd-f88c6f1f374e" />
+
+### Setup
+1. Create API Token at Airtable - https://airtable.com/create/tokens/new
+2. Activate scopes:
+   - data.records:read 
+   - data.records:write 
+   - schema.bases:read 
+4. Access -> Add database "Energy CRM" & get the token (for n8n)
+5. Create Airtable credential in n8n
+   
+   <img width="400" height="300" alt="image" src="https://github.com/user-attachments/assets/1f2eeddc-e078-4d86-8711-4bfffa49fa10" />
+6. Add the token on API Key
+   
+   <img width="400" height="300" alt="image" src="https://github.com/user-attachments/assets/95e4a7f9-d948-4289-adc5-e5f28f61abec" />
+   
+7. Use / Create data for CRM list (from data)
+   
+   <img width="500" height="600" alt="image" src="https://github.com/user-attachments/assets/bd3352ba-b26a-4b1c-a9ab-67ef84c9f40a" />
+
 
 Recommended fields (types in brackets):
 - Company_Name (Single line text)
@@ -47,8 +68,6 @@ Recommended fields (types in brackets):
 - Onboarding_Status (Single select; e.g., New Lead / Documents Pending / Active)
 - Assigned_To (Single select or collaborator)
 - Notes (Long text)
-
-Important: Make sure Email is an Email or text field (not Single select), otherwise Airtable may reject new email values.
 
 ## n8n setup
 1) Webhook node
