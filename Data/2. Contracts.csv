@@ -1,0 +1,9 @@
+Contract_ID,Customer_ID,Customer_Name,Contract_Type,Start_Date,End_Date,Contract_Status,Annual_Volume_MWh,Document_Link
+C-2026-001,1001,Windpark Nordsee GmbH,Direktvermarktung,2026-01-01,2027-12-31,Active,18500,https://docs.quadra/c001.pdf
+C-2025-089,1003,EnergieWende Nord eG,Vollservice,2025-12-15,2027-12-14,Active,8200,https://docs.quadra/c089.pdf
+C-2026-002,1004,Batteriespeicher Ost GmbH,Bilanzkreis,2026-03-01,2028-02-29,Draft,5400,https://docs.quadra/c002-draft.pdf
+C-2025-076,1005,Windenergie Sachsen-Anhalt,Direktvermarktung,2025-11-01,2026-10-31,Active,32000,https://docs.quadra/c076.pdf
+C-2026-003,1009,Green Energy Hamburg GmbH,Vollservice,2025-10-01,2027-09-30,Active,15600,https://docs.quadra/c003.pdf
+C-2026-004,1010,Speichertechnik Süd AG,Bilanzkreis,2026-01-15,2028-01-14,Active,7200,https://docs.quadra/c004.pdf
+C-2026-005,1013,Solar Metropole Ruhr eG,Direktvermarktung,2026-01-22,2027-01-21,Active,9600,https://docs.quadra/c005.pdf
+C-2025-092,1015,Wasserkraft Schwarzwald GmbH,Vollservice,2025-12-01,2026-11-30,Active,12400,https://docs.quadra/c092.pdf

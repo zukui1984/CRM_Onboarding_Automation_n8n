@@ -1,0 +1,11 @@
+﻿Ticket_ID,Customer_ID,Customer_Name,Subject,Description,Priority,Status,Created_Date,Resolved_Date,Assigned_To
+T-001,1001,Windpark Nordsee GmbH,Abrechnung Februar fehlt,Kunde hat noch keine Abrechnung für Februar erhalten,Medium,In Progress,2026-02-12,,Sarah Schmidt
+T-002,1003,EnergieWende Nord eG,Änderung Bankverbindung,Neue IBAN: DE89370400440532013000,Low,Resolved,2026-02-08,2026-02-09,Jan Peters
+T-003,1005,Windenergie Sachsen-Anhalt,Einspeisedaten Windpark 2 fehlen,Seit 10.02. keine Daten für Windpark Harz empfangen,High,New,2026-02-13,,Michael Braun
+T-004,1009,Green Energy Hamburg GmbH,Vertragsverlängerung anfragen,Kunde möchte Vertrag um 2 Jahre verlängern,Medium,Waiting,2026-02-11,,Sarah Schmidt
+T-005,1002,Solar Solutions Bavaria AG,Anlagendaten hochladen,Wo können Anlagenstammdaten hochgeladen werden?,Low,Resolved,2026-02-05,2026-02-05,Jan Peters
+T-006,1010,Speichertechnik Süd AG,Fernwirktechnik Störung,Steuerung funktioniert seit heute Morgen nicht,Urgent,In Progress,2026-02-14,,Michael Braun
+T-007,1004,Batteriespeicher Ost GmbH,Vertrag unterschreiben,Wann wird finaler Vertrag zugesendet?,Medium,New,2026-02-13,,Jan Peters
+T-008,1012,Windpark Eifel GmbH & Co KG,Anschlusskosten Frage,Wie werden Netzanschlusskosten abgerechnet?,Medium,New,2026-02-14,,Sarah Schmidt
+T-009,1006,PV-Anlagen Rheinland GmbH,EEG-Förderung Auskunft,Welche EEG-Vergütung gilt für Anlage 2023?,Low,Waiting,2026-02-13,,Jan Peters
+T-010,1013,Solar Metropole Ruhr eG,Monatsbericht Januar fehlt,Bitte um Zusendung des Berichts,Low,In Progress,2026-02-10,,Michael Braun

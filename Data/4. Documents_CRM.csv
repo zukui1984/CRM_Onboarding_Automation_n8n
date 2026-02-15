@@ -1,0 +1,11 @@
+﻿Document_ID,Customer_ID,Customer_Name,Document_Type,Document_Name,Upload_Date,Status,File_Link
+D-001,1001,Windpark Nordsee GmbH,Handelsregisterauszug,HRA_Windpark_Nord.pdf,2026-01-15,Approved,https://drive.google.com/d001
+D-002,1001,Windpark Nordsee GmbH,Anlagendaten,Anlagenstamm_WP_Nord.xlsx,2026-01-15,Approved,https://drive.google.com/d002
+D-003,1003,EnergieWende Nord eG,Bankverbindung,SEPA_Mandat_EWN.pdf,2025-12-10,Approved,https://drive.google.com/d003
+D-004,1004,Batteriespeicher Ost GmbH,Anlagendaten,Speicher_Technische_Daten.pdf,2026-01-29,Pending Review,https://drive.google.com/d004
+D-005,1005,Windenergie Sachsen-Anhalt,Handelsregisterauszug,HRB_Wind_SA.pdf,2025-11-20,Approved,https://drive.google.com/d005
+D-006,1002,Solar Solutions Bavaria AG,Handelsregisterauszug,HRA_Solar_Bavaria.pdf,2026-02-02,Pending Review,https://drive.google.com/d006
+D-007,1009,Green Energy Hamburg GmbH,Vertragsentwurf,Vertrag_C-2026-003_signed.pdf,2025-10-15,Approved,https://drive.google.com/d007
+D-008,1010,Speichertechnik Süd AG,Bankverbindung,SEPA_Speicher_Sued.pdf,2026-01-05,Approved,https://drive.google.com/d008
+D-009,1013,Solar Metropole Ruhr eG,Anlagendaten,PV_Anlagen_Liste_Ruhr.xlsx,2026-01-22,Approved,https://drive.google.com/d009
+D-010,1015,Wasserkraft Schwarzwald GmbH,Technische Dokumentation,Wasserkraft_Anlagen_Tech.pdf,2025-11-28,Approved,https://drive.google.com/d010
