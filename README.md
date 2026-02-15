@@ -19,6 +19,7 @@ Automates customer onboarding for an energy CRM: receives customer data via webh
 
 - **n8n** (workflow automation)
 - **Airtable** (CRM database)
+- **Postman** (API tools)
 - **Gmail** (notifications via Gmail node)
 
 ---
@@ -57,7 +58,6 @@ Webhook (POST)
    
    <img width="500" height="600" alt="image" src="https://github.com/user-attachments/assets/bd3352ba-b26a-4b1c-a9ab-67ef84c9f40a" />
 
-
 Recommended fields (types in brackets):
 - Company_Name (Single line text)
 - Contact_Person (Single line text)
@@ -73,6 +73,32 @@ Recommended fields (types in brackets):
 1) Webhook node
  - Method: POST
  - Content-Type expected: application/json
+
+## Postman API - Testing 
+- Go to https://web.postman.co/ -> Workspace and create new HTTP
+-	Change GET to POST
+-	Add the URL from n8n (http://localhost:5678/webhook-test/crm-customer-onboarding)
+-	Add Information at Param “Content-Type” and Value: “application/json”
+
+<img width="945" height="321" alt="image" src="https://github.com/user-attachments/assets/fe641194-9a3e-4869-a7c3-645568f15038" />
+
+-	Go to Body and use JSON and copy the JSON test
+
+```json
+{
+  "company_name": "Test Solar GmbH",
+  "email": "test@testsolar.de",
+  "contact_person": "Max Mustermann",
+  "phone": "+49 30 12345678",
+  "address": "Teststraße 1, 10115 Berlin",
+  "customer_type": "Solar"
+}
+```
+
+-	Execute the workflow on N8N then click Send on Postman after you will see this 200 OK, means working and the results below
+
+<img width="945" height="478" alt="image" src="https://github.com/user-attachments/assets/b7596072-d6a5-4364-8481-2f66174b559b" />
+
 
 2) Data Validation (Code node)
 Paste this code into the Code node:
@@ -101,6 +127,9 @@ return [
   },
 ];
 ```
+The result looks like this 
+
+<img width="945" height="387" alt="image" src="https://github.com/user-attachments/assets/8bfd7072-54e0-4ff6-b3c0-38ff07d57631" />
 
 3) IF node (routing)
 Configure one condition only:
@@ -113,7 +142,16 @@ Result:
 - false → FALSE output
 
 4) Airtable node (TRUE branch)
-Node: Airtable → Record → Create
+Node: Airtable → Create Record → Create
+
+Setup:
+a.	Credential connect to Airtable account with connected API
+b.	Resource -> Record
+c.	Operation: Create
+d.	Base -> From List -> Energy CRM
+e.	Table -> From List -> Customers
+f.	Mappig Column Mode -> Map Each Column Manually -> then appear “Values to Send” with those columns from Airtable
+g.	IF data must appear and move the data as Expression into each column
 
 Map fields from the normalized object:
 - Company_Name → {{ $json.data.company_name }}
@@ -122,40 +160,37 @@ Map fields from the normalized object:
 - Phone → {{ $json.data.phone }}
 - Address → {{ $json.data.address }}
 - Customer_Type → {{ $json.data.customer_type }}
+- Notes → Customer onboarded via webhook API
   
 Optional fixed values (recommended):
 - Onboarding_Status → New Lead
+- Assigned_To → Sarah Schmidt
 
-Assigned_To → Sarah Schmidt
-
-Notes → Customer onboarded via webhook API
+<img width="945" height="382" alt="image" src="https://github.com/user-attachments/assets/5cdf4eb7-55b3-43fa-bc1f-d8af408553b2" />
 
 5) Gmail node (FALSE branch)
-Node: Gmail → Message → Send
+Node: Gmail → Send a Message → Send
 
-Suggested config:
-- To: internal ops/support email (e.g., ops@yourcompany.com)
-- Subject (Expression):
+Setup
+a. Conditions use Expression and add {{ $json.isValid }} -> is equal to (Boolean) -> true
+b. Google Cloud -> Enable Gmail API
+  i.	Create OAuth Client ID
+  ii.	Application Type: Web application
+  iii.	Name: From the project (free to choose)
+  iv.	Authorized redirect URIs (from n8n)
 
-```text
-❌ Onboarding failed — missing: {{ $json.missingFields.join(', ') }}
-```
+  <img width="400" height="426" alt="image" src="https://github.com/user-attachments/assets/b512fde6-065e-4ca1-a97d-8d23219a5701" />
 
-- Email Type: Text (simpler for debugging) or HTML
-- Message (Expression):
+  <img width="801" height="244" alt="image" src="https://github.com/user-attachments/assets/9e84840d-135e-4650-9272-4f89434e7b91" />
 
-```text
-Onboarding FAILED.
+c. Add the "Client ID" and "Client secret" information into n8n
 
-Missing fields:
-{{ $json.missingFields.join(', ') }}
+<img width="945" height="444" alt="image" src="https://github.com/user-attachments/assets/e9e2f891-b559-4d17-a965-26682d061ba3" />
 
-Received payload:
-{{ JSON.stringify($json.data, null, 2) }}
-```
+
 
 ## How to test
-Valid payload (should go TRUE → Airtable)
+1. Valid payload (should go TRUE → Airtable)
 ```json
 {
   "company_name": "Test Solar GmbH",
@@ -167,7 +202,9 @@ Valid payload (should go TRUE → Airtable)
 }
 ```
 
-Invalid payload (should go FALSE → Gmail)
+2. Invalid payload (should go FALSE → Gmail)
+- Go to POSTMAN API and delete JSON info of "customer type": "Solar"
+  
 ```json
 {
   "company_name": "Test Solar GmbH",
@@ -178,13 +215,13 @@ Invalid payload (should go FALSE → Gmail)
 }
 ```
 
-What to verify:
+Result:
 - TRUE test: record appears in Airtable Customers
-- FALSE test: alert email arrives (also check Spam/Promotions and the sender’s “Sent” folder)
 
-Production usage (automation)
-1. Activate the workflow in n8n.
-2. Use the production webhook URL in the real system that submits onboarding data (website form, internal tool, etc.).
-3. n8n will route requests automatically:
- - valid → Airtable
- - invalid → Gmail
+
+- FALSE test: alert email arrives (also check Spam/Promotions and the sender’s “Sent” folder)
+- 
+<img width="933" height="641" alt="image" src="https://github.com/user-attachments/assets/c8ef6438-e293-4691-a826-c9264fe8a60f" />
+
+
+
