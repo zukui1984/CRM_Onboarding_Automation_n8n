@@ -1,0 +1,414 @@
+{
+  "name": "Energy_CRM_Onboarding",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "crm-customer-onboarding",
+        "responseMode": "lastNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        0,
+        0
+      ],
+      "id": "7ab8d9f2-0a08-46bb-b1e8-a2e60ef0cf9c",
+      "name": "Webhook",
+      "webhookId": "63311f2b-f93d-4e65-a975-6f91fa828317"
+    },
+    {
+      "parameters": {
+        "conditions": {
+          "options": {
+            "caseSensitive": true,
+            "leftValue": "",
+            "typeValidation": "strict",
+            "version": 3
+          },
+          "conditions": [
+            {
+              "id": "cc8be5fc-3d77-4f37-bb48-9f156d32e1bf",
+              "leftValue": "={{ $json.isValid }}",
+              "rightValue": true,
+              "operator": {
+                "type": "boolean",
+                "operation": "equals"
+              }
+            }
+          ],
+          "combinator": "or"
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.if",
+      "typeVersion": 2.3,
+      "position": [
+        448,
+        0
+      ],
+      "id": "32e0e47f-da50-43e8-b1f3-69355d72a5bf",
+      "name": "If"
+    },
+    {
+      "parameters": {
+        "sendTo": "nicky.kosasih@googlemail.com",
+        "subject": "CRM Energy",
+        "emailType": "text",
+        "message": "=Sehr geehrtes Team,\n\nanbei finden Sie den wöchentlichen Performance-Report unseres Anlagenportfolios.\n\nHighlights der Woche:\n- Gesamtproduktion: {{total_production}} MWh\n- Durchschnittliche Performance: {{avg_performance}}%\n- Aktive Alerts: {{alert_count}}\n\nMit freundlichen Grüßen,\nAutomatisches Reporting-System",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.gmail",
+      "typeVersion": 2.2,
+      "position": [
+        672,
+        96
+      ],
+      "id": "c4a6e0e6-7aaf-4d3e-b1b7-ceb8ed5e2e49",
+      "name": "Send a message",
+      "webhookId": "988c8a62-5b41-4f45-b557-0905d2be296c",
+      "credentials": {
+        "gmailOAuth2": {
+          "id": "z9ZngkzJyNY9Vgj8",
+          "name": "Gmail account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "jsCode": "const incoming = $input.first().json;\n\n// webhook -> { body: {...}, headers: {...}, ... }\n// sometimes you may already have the payload directly\nconst payload = incoming.body ?? incoming;\n\n// if payload itself contains a \"body\" again, unwrap it\nconst data = payload.body ?? payload;\n\nconst required = ['company_name','email','contact_person','customer_type'];\nconst missing = required.filter(k => !data?.[k] || String(data[k]).trim() === '');\n\nreturn [\n  {\n    json: {\n      isValid: missing.length === 0,\n      missingFields: missing,\n      data,\n    },\n  },\n];\n"
+      },
+      "type": "n8n-nodes-base.code",
+      "typeVersion": 2,
+      "position": [
+        224,
+        0
+      ],
+      "id": "a43d56bc-b26c-46ce-83b1-c2e67477af16",
+      "name": "Data Validation"
+    },
+    {
+      "parameters": {
+        "authentication": "airtableOAuth2Api",
+        "operation": "create",
+        "base": {
+          "__rl": true,
+          "value": "appyJoXdNJx4k0DmW",
+          "mode": "list",
+          "cachedResultName": "Energy CRM",
+          "cachedResultUrl": "https://airtable.com/appyJoXdNJx4k0DmW"
+        },
+        "table": {
+          "__rl": true,
+          "value": "tbl0jNHxtQ11LcbJS",
+          "mode": "list",
+          "cachedResultName": "Customers",
+          "cachedResultUrl": "https://airtable.com/appyJoXdNJx4k0DmW/tbl0jNHxtQ11LcbJS"
+        },
+        "columns": {
+          "mappingMode": "defineBelow",
+          "value": {
+            "Company_Name": "={{ $json.data.company_name }}",
+            "Contact_Person": "={{ $json.data.contact_person }}",
+            "E-mail": "={{ $json.data.email }}",
+            "Phone": "={{ $json.data.phone }}",
+            "Address": "={{ $json.data.address }}",
+            "Customer_Type": "={{ $json.data.customer_type }}",
+            "Onboarding_Status": "New Lead",
+            "Assigned_To": "Sarah Schmidt",
+            "Notes": "Customer onboarded via webhook API"
+          },
+          "matchingColumns": [],
+          "schema": [
+            {
+              "id": "Customer_ID",
+              "displayName": "Customer_ID",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Company_Name",
+              "displayName": "Company_Name",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Contact_Person",
+              "displayName": "Contact_Person",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "E-mail",
+              "displayName": "E-mail",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Phone",
+              "displayName": "Phone",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Address",
+              "displayName": "Address",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Customer_Type",
+              "displayName": "Customer_Type",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Customer_Type",
+                  "value": "Customer_Type"
+                },
+                {
+                  "name": "Wind",
+                  "value": "Wind"
+                },
+                {
+                  "name": "Solar",
+                  "value": "Solar"
+                },
+                {
+                  "name": "Hybrid",
+                  "value": "Hybrid"
+                },
+                {
+                  "name": "Battery Storage",
+                  "value": "Battery Storage"
+                },
+                {
+                  "name": "Biomass",
+                  "value": "Biomass"
+                },
+                {
+                  "name": "Geothermal",
+                  "value": "Geothermal"
+                },
+                {
+                  "name": "Hydro",
+                  "value": "Hydro"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Onboarding_Status",
+              "displayName": "Onboarding_Status",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "New Lead",
+                  "value": "New Lead"
+                },
+                {
+                  "name": "Documents Pending",
+                  "value": "Documents Pending"
+                },
+                {
+                  "name": "Review",
+                  "value": "Review"
+                },
+                {
+                  "name": "Active",
+                  "value": "Active"
+                },
+                {
+                  "name": "Incomplete",
+                  "value": "Incomplete"
+                },
+                {
+                  "name": "Onboarding_Status",
+                  "value": "Onboarding_Status"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Created_Date",
+              "displayName": "Created_Date",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": true,
+              "removed": true
+            },
+            {
+              "id": "Assigned_To",
+              "displayName": "Assigned_To",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "options",
+              "options": [
+                {
+                  "name": "Max Müller",
+                  "value": "Max Müller"
+                },
+                {
+                  "name": "Sarah Schmidt",
+                  "value": "Sarah Schmidt"
+                },
+                {
+                  "name": "Tom Weber",
+                  "value": "Tom Weber"
+                },
+                {
+                  "name": "Unassigned",
+                  "value": "Unassigned"
+                },
+                {
+                  "name": "Assigned_To",
+                  "value": "Assigned_To"
+                },
+                {
+                  "name": "Michael Braun",
+                  "value": "Michael Braun"
+                },
+                {
+                  "name": "Jan Peters",
+                  "value": "Jan Peters"
+                }
+              ],
+              "readOnly": false,
+              "removed": false
+            },
+            {
+              "id": "Notes",
+              "displayName": "Notes",
+              "required": false,
+              "defaultMatch": false,
+              "canBeUsedToMatch": true,
+              "display": true,
+              "type": "string",
+              "readOnly": false,
+              "removed": false
+            }
+          ],
+          "attemptToConvertTypes": false,
+          "convertFieldsToString": false
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.airtable",
+      "typeVersion": 2.1,
+      "position": [
+        672,
+        -96
+      ],
+      "id": "b81627b4-87bf-4bca-9fd3-d7bc3bee2671",
+      "name": "Create a record",
+      "credentials": {
+        "airtableOAuth2Api": {
+          "id": "7Iad94xOjbLgoTFJ",
+          "name": "Airtable account"
+        }
+      }
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Data Validation",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "If": {
+      "main": [
+        [
+          {
+            "node": "Create a record",
+            "type": "main",
+            "index": 0
+          }
+        ],
+        [
+          {
+            "node": "Send a message",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Data Validation": {
+      "main": [
+        [
+          {
+            "node": "If",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1",
+    "availableInMCP": false,
+    "timeSavedMode": "fixed",
+    "callerPolicy": "workflowsFromSameOwner"
+  },
+  "versionId": "5af6cd0c-de79-4899-aaa1-d65659fcefd2",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "91b162f257cc7a5079a528f1a84ce20a2a60a6a6bcd5e1eb459257a3c5912efa"
+  },
+  "id": "IsoaGi-mqFN5_HjkC7M4Q",
+  "tags": []
+}
