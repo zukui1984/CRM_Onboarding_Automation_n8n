@@ -17,7 +17,7 @@ Automates customer onboarding for an energy CRM: receives customer data via webh
 
 ## Tech stack
 
-- **n8n** (workflow automation)
+- **n8n** (workflow automation) & Docker (Self-hosted n8n)
 - **Airtable** (CRM database)
 - **Postman** (API tools)
 - **Gmail** (notifications via Gmail node)
