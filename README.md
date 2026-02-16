@@ -179,10 +179,10 @@ Node: Gmail → Send a Message → Send
 Setup
 a. Conditions use Expression and add {{ $json.isValid }} -> is equal to (Boolean) -> true
 b. Google Cloud -> Enable Gmail API
-  i.	Create OAuth Client ID
-  ii.	Application Type: Web application
-  iii.	Name: From the project (free to choose)
-  iv.	Authorized redirect URIs (from n8n)
+  - Create OAuth Client ID
+  - Application Type: Web application
+  - Name: From the project (free to choose)
+  - Authorized redirect URIs (from n8n)
 
   <img width="400" height="426" alt="image" src="https://github.com/user-attachments/assets/b512fde6-065e-4ca1-a97d-8d23219a5701" />
 
