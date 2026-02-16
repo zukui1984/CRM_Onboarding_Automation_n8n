@@ -48,10 +48,10 @@ Webhook (POST)
 ### Setup
 1. Create API Token at Airtable - https://airtable.com/create/tokens/new
 2. Activate scopes:
-   - data.records:read 
-   - data.records:write 
-   - schema.bases:read 
-4. Access -> Add database "Energy CRM" & get the token (for n8n)
+   - `data.records:read` 
+   - `data.records:write` 
+   - `schema.bases:read `
+4. Access -> Add database **"Energy CRM"** & get the token (for n8n)
 5. Create Airtable credential in n8n
    
    <img width="400" height="300" alt="image" src="https://github.com/user-attachments/assets/1f2eeddc-e078-4d86-8711-4bfffa49fa10" />
@@ -80,10 +80,10 @@ Recommended fields (types in brackets):
  - Content-Type expected: application/json
 
 ## Postman API - Testing 
-- Go to https://web.postman.co/ -> Workspace and create new HTTP
+- Go to `https://web.postman.co/` -> Workspace and create new HTTP
 -	Change GET to POST
--	Add the URL from n8n (http://localhost:5678/webhook-test/crm-customer-onboarding)
--	Add Information at Param “Content-Type” and Value: “application/json”
+-	Add the URL from n8n (`http://localhost:5678/webhook-test/crm-customer-onboarding`)
+-	Add Information at Param **“Content-Type”** and Value: **“application/json”**
 
 <img width="945" height="321" alt="image" src="https://github.com/user-attachments/assets/fe641194-9a3e-4869-a7c3-645568f15038" />
 
@@ -138,9 +138,9 @@ The result looks like this
 
 3) IF node (routing)
 Configure one condition only:
-- Value 1 (Expression): {{ $json.isValid }}
+- Value 1 (Expression): `{{ $json.isValid }}`
 - Operation: is equal to
-- Value 2: true (Boolean)
+- Value 2: `true` (Boolean)
 
 Result:
 - true → TRUE output
@@ -155,16 +155,16 @@ b.	Resource -> Record
 c.	Operation: Create
 d.	Base -> From List -> Energy CRM
 e.	Table -> From List -> Customers
-f.	Mappig Column Mode -> Map Each Column Manually -> then appear “Values to Send” with those columns from Airtable
+f.	Mappig Column Mode -> Map Each Column Manually -> then appear `“Values to Send”` with those columns from Airtable
 g.	IF data must appear and move the data as Expression into each column
 
 Map fields from the normalized object:
-- Company_Name → {{ $json.data.company_name }}
-- Contact_Person → {{ $json.data.contact_person }}
-- Email → {{ $json.data.email }}
-- Phone → {{ $json.data.phone }}
-- Address → {{ $json.data.address }}
-- Customer_Type → {{ $json.data.customer_type }}
+- Company_Name → `{{ $json.data.company_name }}`
+- Contact_Person → `{{ $json.data.contact_person }}`
+- Email → `{{ $json.data.email }}`
+- Phone → `{{ $json.data.phone }}`
+- Address → `{{ $json.data.address }}`
+- Customer_Type → `{{ $json.data.customer_type }}`
 - Notes → Customer onboarded via webhook API
   
 Optional fixed values (recommended):
@@ -177,7 +177,7 @@ Optional fixed values (recommended):
 Node: Gmail → Send a Message → Send
 
 Setup
-a. Conditions use Expression and add {{ $json.isValid }} -> is equal to (Boolean) -> true
+a. Conditions use Expression and add `{{ $json.isValid }}` -> is equal to (Boolean) -> `true`
 b. Google Cloud -> Enable Gmail API
   - Create OAuth Client ID
   - Application Type: Web application
@@ -186,12 +186,11 @@ b. Google Cloud -> Enable Gmail API
 
   <img width="400" height="426" alt="image" src="https://github.com/user-attachments/assets/b512fde6-065e-4ca1-a97d-8d23219a5701" />
 
-  <img width="801" height="244" alt="image" src="https://github.com/user-attachments/assets/9e84840d-135e-4650-9272-4f89434e7b91" />
+  <img width="500" height="260" alt="image" src="https://github.com/user-attachments/assets/9e84840d-135e-4650-9272-4f89434e7b91" />
 
-c. Add the "Client ID" and "Client secret" information into n8n
+c. Add the **Client ID** and **Client secret** information into n8n
 
-<img width="945" height="444" alt="image" src="https://github.com/user-attachments/assets/e9e2f891-b559-4d17-a965-26682d061ba3" />
-
+<img width="700" height="400" alt="image" src="https://github.com/user-attachments/assets/e9e2f891-b559-4d17-a965-26682d061ba3" />
 
 
 ## How to test
@@ -208,7 +207,7 @@ c. Add the "Client ID" and "Client secret" information into n8n
 ```
 
 2. Invalid payload (should go FALSE → Gmail)
-- Go to POSTMAN API and delete JSON info of "customer type": "Solar"
+- Go to POSTMAN API and delete JSON info of `"customer type": "Solar"`
   
 ```json
 {
@@ -223,10 +222,9 @@ c. Add the "Client ID" and "Client secret" information into n8n
 Result:
 - TRUE test: record appears in Airtable Customers
 
-
 - FALSE test: alert email arrives (also check Spam/Promotions and the sender’s “Sent” folder)
-- 
-<img width="933" height="641" alt="image" src="https://github.com/user-attachments/assets/c8ef6438-e293-4691-a826-c9264fe8a60f" />
+  
+<img width="700" height="600" alt="image" src="https://github.com/user-attachments/assets/c8ef6438-e293-4691-a826-c9264fe8a60f" />
 
 
 
